@@ -1,0 +1,82 @@
+name: 'OBS Studio development environment'
+description: 'Extracts development environment for OBS Studio plugins.'
+inputs:
+  arch:
+    description: 'Architecture, x86_64 or arm64 (macOS only).'
+    required: false
+    defaults: 'x86_64'
+    type: string
+  obs:
+    description: 'Version of OBS Studio'
+    required: true
+    type: string
+  path:
+    description: 'Location to extract (macOS and Linux only).'
+    defaults: '/tmp/obs-deps'
+    required: false
+    type: string
+  ubuntu:
+    description: 'Ubuntu version (Linux only). If not specified, automatically selected.'
+    defaults: ''
+    required: false
+    type: string
+  verbose:
+    description: 'Enable printing command lines.'
+    required: false
+    defaults: false
+    type: boolean
+outputs:
+  OBS_QT_VERSION_MAJOR:
+    description: "QT major version required by OBS"
+    value: ${{ steps.macOS.outputs.OBS_QT_VERSION_MAJOR }}${{ steps.Linux.outputs.OBS_QT_VERSION_MAJOR }}${{ steps.Windows.outputs.OBS_QT_VERSION_MAJOR }}
+  MACOSX_DEPLOYMENT_TARGET:
+    description: "Deployment target version for macOS"
+    value: ${{ steps.macOS.outputs.MACOSX_DEPLOYMENT_TARGET }}
+runs:
+  using: 'composite'
+  steps:
+    - name: Download for Linux
+      id: Linux
+      if: ${{ runner.os == 'Linux' }}
+      shell: bash
+      run: |
+        if test ${{ inputs.verbose }} != false; then
+          bash=(bash -x)
+        else
+          bash=(bash)
+        fi
+        "${bash[@]}" ${{ github.action_path }}/"scripts/linux-download.sh" -a -o "${{ inputs.obs }}" -u "${{ inputs.ubuntu }}"
+
+    - name: Download for macOS
+      id: macOS
+      if: ${{ runner.os == 'macOS' }}
+      shell: bash
+      run: |
+        if test ${{ inputs.verbose }} != false; then
+          bash=(bash -x)
+        else
+          bash=(bash)
+        fi
+        "${bash[@]}" ${{ github.action_path }}/"scripts/macos-download.sh" -a "${{ inputs.arch }}" -o "${{ inputs.obs }}" -d "${{ inputs.path }}"
+
+    - name: Download for Windows
+      id: Windows
+      if: ${{ runner.os == 'Windows' }}
+      shell: pwsh
+      run: |
+        if (${{ inputs.obs }} -eq 27) {
+          Invoke-WebRequest `
+            -uri 'http://www.nagater.net/obs-studio/obs-plugintemplate-20220727-96382bd-windows-${{ matrix.arch }}.zip' `
+            -OutFile 'obs-studio-devel.zip' `
+            -ErrorAction stop
+          Write-Output '::set-output name=OBS_QT_VERSION_MAJOR::5'
+        } elseif (${{ inputs.obs }} -eq 28) {
+          Invoke-WebRequest `
+            -uri 'http://www.nagater.net/obs-studio/obs-plugintemplate-obs-28-04fefe7d6-windows-${{ matrix.arch }}.zip' `
+            -OutFile 'obs-studio-devel.zip' `
+            -ErrorAction stop
+          Write-Output '::set-output name=OBS_QT_VERSION_MAJOR::6'
+        }
+        Expand-Archive `
+          -path 'obs-studio-devel.zip' `
+          -DestinationPath '.'
