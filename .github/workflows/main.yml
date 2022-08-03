@@ -18,7 +18,7 @@ jobs:
         shell: bash
     steps:
       - name: ls
-        runs: |
+        run: |
           ls > ls.out
       - name: upload
         uses: actions/upload-artifact@v3
