@@ -8,7 +8,7 @@ on:
       - '*'
 
 env:
-  artifactName: ${{ github.event_name == 'tag' && join('artifact-', github.event_name) || 'artifact' }}
+  artifactName: ${{ contains(github.ref_name, '/') && 'artifact' || github.ref_name }}
 
 jobs:
   linux:
