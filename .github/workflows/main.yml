@@ -22,5 +22,7 @@ jobs:
           ls > ls.out
       - name: upload
         uses: actions/upload-artifact@v3
-        path: '*'
+        with:
+          name: ${{ env.artifactName }}
+          path: '*'
 
