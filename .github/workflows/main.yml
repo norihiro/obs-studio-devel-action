@@ -20,6 +20,9 @@ jobs:
       - name: ls
         run: |
           ls > ls.out
+          echo 'github.event_name: ${{ github.event_name }}'
+          echo 'github.ref: ${{ github.ref }}'
+          echo 'github.ref_name: ${{ github.ref_name }}'
       - name: upload
         uses: actions/upload-artifact@v3
         with:
