@@ -66,7 +66,7 @@ runs:
       run: |
         if (${{ inputs.obs }} -eq 27) {
           Invoke-WebRequest `
-            -uri 'http://www.nagater.net/obs-studio/obs-plugintemplate-20220727-96382bd-windows-${{ matrix.arch }}.zip' `
+            -uri 'http://www.nagater.net/obs-studio/obs-plugintemplate-20220727-96382bd-windows-${{ matrix.arch }}-mod.zip' `
             -OutFile 'obs-studio-devel.zip' `
             -ErrorAction stop
           Write-Output '::set-output name=OBS_QT_VERSION_MAJOR::5'
@@ -77,6 +77,7 @@ runs:
             -ErrorAction stop
           Write-Output '::set-output name=OBS_QT_VERSION_MAJOR::6'
         }
+        certutil.exe -hashfile 'obs-studio-devel.zip' SHA1
         Expand-Archive `
           -path 'obs-studio-devel.zip' `
           -DestinationPath '.'
