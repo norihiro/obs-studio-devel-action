@@ -1,0 +1,25 @@
+name: some trial on actions
+
+on:
+  push:
+    branches:
+      - tmp-action
+    tags:
+      - '*'
+
+env:
+  artifactName: artifact-${{ github.event_name }}
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: ls
+        ls > ls.out
+      - name: upload
+        uses: actions/upload-artifact@v3
+        path: '*'
+
