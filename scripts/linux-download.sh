@@ -42,6 +42,8 @@ $apt update
 $apt install \
 	wget \
 	cmake ninja-build pkg-config clang clang-format build-essential curl ccache g++ \
+	bzip2 \
+	file \
 	libx11-dev libxcb-randr0-dev libxcb-shm0-dev libxcb-xinerama0-dev libxcomposite-dev libxinerama-dev \
 	libxcb1-dev libx11-xcb-dev libxcb-xfixes0-dev libcmocka-dev libxss-dev libglvnd-dev libgles2-mesa \
 	libgles2-mesa-dev libwayland-dev
