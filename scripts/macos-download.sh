@@ -43,8 +43,8 @@ case "$obs-$arch" in
 		;;
 	28-arm64)
 		$d0/download-extract.sh \
-			"https://github.com/obsproject/obs-deps/releases/download/2022-08-02/macos-deps-2022-08-02-arm64.tar.xz" \
-			755e0fa69b17a3ae444e1befa9d91d77e3cafe628fbd1c6333686091826595cd \
+			"https://github.com/obsproject/obs-deps/releases/download/2022-08-02/macos-deps-2022-08-02-universal.tar.xz" \
+			de057e73e6fe0825664c258ca2dd6798c41ae580bf4d896e1647676a4941934a \
 			$deps
 		$d0/download-extract.sh \
 			"https://github.com/obsproject/obs-deps/releases/download/2022-08-02/macos-deps-qt6-2022-08-02-universal.tar.xz" \
@@ -75,8 +75,8 @@ case "$obs-$arch" in
 		;;
 	27-arm64)
 		$d0/download-extract.sh \
-			"https://github.com/obsproject/obs-deps/releases/download/2022-07-18/macos-deps-2022-07-18-arm64.tar.xz" \
-			1386418e41a60d83dd7de8742ede3d13ebb27b40ded6e7e41c00fd85a677a09d \
+			"https://github.com/obsproject/obs-deps/releases/download/2022-07-18/macos-deps-2022-07-18-universal.tar.xz" \
+			e179e79e0742beac5bb4702572f93a47debc600e17916d4ca431b6d23cdb88b9 \
 			$deps
 		$d0/download-extract.sh \
 			"https://github.com/obsproject/obs-deps/releases/download/2022-07-18/macos-deps-qt5-2022-07-18-universal.tar.xz" \
