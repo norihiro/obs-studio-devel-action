@@ -68,7 +68,21 @@ case "$obs" in
 		sudo apt install /tmp/obs-studio-devel.deb
 		;;
 	28 | 28.*)
-		curl -o /tmp/obs-studio-devel.deb http://www.nagater.net/obs-studio/obs-studio-28.0.0-beta1-3b3a4d995-${ubuntu}.deb
+		case "$ubuntu" in
+			ubuntu-20.04)
+				curl -O http://www.nagater.net/obs-studio/obs-studio-28.0.0-beta1-9d3dc5c99-ubuntu-20.04.deb
+				sha256sum <<-EOF
+1b48138d7367e574b3760b3cd3b9cd2523678acbe7e0feeee28a610352159732  obs-studio-28.0.0-beta1-9d3dc5c99-ubuntu-20.04.deb
+EOF
+				;;
+			ubuntu-22.04)
+				curl -O http://www.nagater.net/obs-studio/obs-studio-28.0.0-beta1-9d3dc5c99-ubuntu-22.04.deb
+				sha256sum <<-EOF
+8032a6e4182931fdcf912d53434cda0bae5714d9f2f134bbb5f1f8c7d1a1882f  obs-studio-28.0.0-beta1-9d3dc5c99-ubuntu-22.04.deb
+EOF
+				;;
+		esac
+		mv obs-studio-*.deb /tmp/obs-studio-devel.deb
 		sudo apt install /tmp/obs-studio-devel.deb
 		;;
 esac
