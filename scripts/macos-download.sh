@@ -5,6 +5,8 @@ export LANG=C
 
 d0="$(cd "$(dirname $0)" && pwd)"
 
+flg_qt=1
+
 while (($# > 0)); do
 	case "$1" in
 		-a)
@@ -16,6 +18,12 @@ while (($# > 0)); do
 		-d)
 			deps="$2"
 			shift 2;;
+		--no-qt)
+			flg_qt=0
+			shift;;
+		--qt)
+			flg_qt=1
+			shift;;
 		*)
 			echo "Error: unkown option $1" >&2
 			exit 1
@@ -30,7 +38,7 @@ case "$obs-$arch" in
 			"https://github.com/obsproject/obs-deps/releases/download/2022-08-02/macos-deps-2022-08-02-x86_64.tar.xz" \
 			7637e52305e6fc53014b5aabd583f1a4490b1d97450420e977cae9a336a29525 \
 			$deps
-		$d0/download-extract.sh \
+		test $flg_qt -gt 0 && $d0/download-extract.sh \
 			"https://github.com/obsproject/obs-deps/releases/download/2022-08-02/macos-deps-qt6-2022-08-02-x86_64.tar.xz" \
 			a83f72a11023b03b6cb2dc365f0a66ad9df31163bbb4fe2df32d601856a9fad3 \
 			$deps
@@ -46,7 +54,7 @@ case "$obs-$arch" in
 			"https://github.com/obsproject/obs-deps/releases/download/2022-08-02/macos-deps-2022-08-02-universal.tar.xz" \
 			de057e73e6fe0825664c258ca2dd6798c41ae580bf4d896e1647676a4941934a \
 			$deps
-		$d0/download-extract.sh \
+		test $flg_qt -gt 0 && $d0/download-extract.sh \
 			"https://github.com/obsproject/obs-deps/releases/download/2022-08-02/macos-deps-qt6-2022-08-02-universal.tar.xz" \
 			252e6684f43ab9c6f262c73af739e2296ce391b998da2c4ee04c254aaa07db18 \
 			$deps
@@ -62,7 +70,7 @@ case "$obs-$arch" in
 			"https://github.com/obsproject/obs-deps/releases/download/2022-07-18/macos-deps-2022-07-18-x86_64.tar.xz" \
 			d2fc48e4cbcef840d59d6122f0e78f69602ff8f6264ea9a6fdfcfce88607e98d \
 			$deps
-		$d0/download-extract.sh \
+		test $flg_qt -gt 0 && $d0/download-extract.sh \
 			"https://github.com/obsproject/obs-deps/releases/download/2022-07-18/macos-deps-qt5-2022-07-18-x86_64.tar.xz" \
 			13787c6c21b931373833652d5016dd80634110c2b735eb0bf03b4c77b86a4489 \
 			$deps
@@ -78,7 +86,7 @@ case "$obs-$arch" in
 			"https://github.com/obsproject/obs-deps/releases/download/2022-07-18/macos-deps-2022-07-18-universal.tar.xz" \
 			e179e79e0742beac5bb4702572f93a47debc600e17916d4ca431b6d23cdb88b9 \
 			$deps
-		$d0/download-extract.sh \
+		test $flg_qt -gt 0 && $d0/download-extract.sh \
 			"https://github.com/obsproject/obs-deps/releases/download/2022-07-18/macos-deps-qt5-2022-07-18-universal.tar.xz" \
 			f8885ba0952740dc3f0d2bf966a05cc181e1dcd17a43bcf14f9a480fd95d65d1 \
 			$deps

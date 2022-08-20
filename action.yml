@@ -15,6 +15,11 @@ inputs:
     defaults: '/tmp/obs-deps'
     required: false
     type: string
+  qt:
+    description: 'Prepare Qt library'
+    required: false
+    defaults: true
+    type: boolean
   ubuntu:
     description: 'Ubuntu version (Linux only). If not specified, automatically selected.'
     defaults: ''
@@ -45,7 +50,12 @@ runs:
         else
           bash=(bash)
         fi
-        "${bash[@]}" ${{ github.action_path }}/"scripts/linux-download.sh" -a -o "${{ inputs.obs }}" -u "${{ inputs.ubuntu }}"
+        if test ${{ inputs.qt }} != false; then
+          flg_qt=--qt
+        else
+          flg_qt=--no-qt
+        fi
+        "${bash[@]}" ${{ github.action_path }}/"scripts/linux-download.sh" -a -o "${{ inputs.obs }}" -u "${{ inputs.ubuntu }}" $flg_qt
 
     - name: Download for macOS
       id: macOS
@@ -57,7 +67,12 @@ runs:
         else
           bash=(bash)
         fi
-        "${bash[@]}" ${{ github.action_path }}/"scripts/macos-download.sh" -a "${{ inputs.arch }}" -o "${{ inputs.obs }}" -d "${{ inputs.path }}"
+        if test ${{ inputs.qt }} != false; then
+          flg_qt=--qt
+        else
+          flg_qt=--no-qt
+        fi
+        "${bash[@]}" ${{ github.action_path }}/"scripts/macos-download.sh" -a "${{ inputs.arch }}" -o "${{ inputs.obs }}" -d "${{ inputs.path }}" $flg_qt
 
     - name: Download for Windows
       id: Windows

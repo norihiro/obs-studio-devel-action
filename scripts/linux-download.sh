@@ -9,6 +9,7 @@ d0="$(cd "$(dirname $0)" && pwd)"
 obs=27
 ubuntu=''
 apt=true
+flg_qt=1
 
 while (($# > 0)); do
 	case "$1" in
@@ -21,6 +22,12 @@ while (($# > 0)); do
 		-a)
 			apt='sudo apt'
 			shift ;;
+		--no-qt)
+			flg_qt=0
+			shift;;
+		--qt)
+			flg_qt=1
+			shift;;
 		*)
 			echo "Error: unkown option $1" >&2
 			exit 1
@@ -48,19 +55,21 @@ $apt install \
 	libxcb1-dev libx11-xcb-dev libxcb-xfixes0-dev libcmocka-dev libxss-dev libglvnd-dev libgles2-mesa \
 	libgles2-mesa-dev libwayland-dev
 
-case "$ubuntu/$obs" in
-	ubuntu-20.04/* | */27*)
-		$apt install qtbase5-dev qtbase5-private-dev libqt5svg5-dev qtwayland5
-		OBS_QT_VERSION_MAJOR=5
-		;;
-	ubuntu-22.04/28*)
-		$apt install qt6-base-dev qt6-base-private-dev libqt6svg6-dev qt6-wayland
-		OBS_QT_VERSION_MAJOR=6
-		;;
-	*)
-		echo "Error: Unsupported OS OBS combination $ubuntu/$obs" >&2
-		exit 1 ;;
-esac
+if ((flg_qt)); then
+	case "$ubuntu/$obs" in
+		ubuntu-20.04/* | */27*)
+			$apt install qtbase5-dev qtbase5-private-dev libqt5svg5-dev qtwayland5
+			OBS_QT_VERSION_MAJOR=5
+			;;
+		ubuntu-22.04/28*)
+			$apt install qt6-base-dev qt6-base-private-dev libqt6svg6-dev qt6-wayland
+			OBS_QT_VERSION_MAJOR=6
+			;;
+		*)
+			echo "Error: Unsupported OS OBS combination $ubuntu/$obs" >&2
+			exit 1 ;;
+	esac
+fi
 
 case "$obs" in
 	27 | 27.*)
