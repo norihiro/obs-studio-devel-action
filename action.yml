@@ -4,7 +4,7 @@ inputs:
   arch:
     description: 'Architecture, x86_64 or arm64 (macOS only).'
     required: false
-    defaults: 'x86_64'
+    default: 'x86_64'
     type: string
   obs:
     description: 'Version of OBS Studio'
@@ -12,23 +12,23 @@ inputs:
     type: string
   path:
     description: 'Location to extract (macOS and Linux only).'
-    defaults: '/tmp/obs-deps'
+    default: '/tmp/obs-deps'
     required: false
     type: string
   qt:
     description: 'Prepare Qt library'
     required: false
-    defaults: true
+    default: true
     type: boolean
   ubuntu:
     description: 'Ubuntu version (Linux only). If not specified, automatically selected.'
-    defaults: ''
+    default: ''
     required: false
     type: string
   verbose:
     description: 'Enable printing command lines.'
     required: false
-    defaults: false
+    default: false
     type: boolean
 outputs:
   OBS_QT_VERSION_MAJOR:
