@@ -35,8 +35,8 @@ case "$obs-$arch" in
 			a83f72a11023b03b6cb2dc365f0a66ad9df31163bbb4fe2df32d601856a9fad3 \
 			$deps
 		$d0/download-extract.sh \
-			http://www.nagater.net/obs-studio/obs-studio-devel-28.0.0-beta1-177-g9d3dc5c99-macos-x86_64.tar.gz \
-			e70a1993b53678a7f4d51bc95975fea551ba09dd82cd2f7f1c6e0f479d608152 \
+			http://www.nagater.net/obs-studio/obs-studio-devel-28.0.0-beta1-182-g46c129fc1-macos-x86_64.tar.gz \
+			3aae036301880352f4e38b41adaaddcadb72dcbf5749e21f68bc5a0e469e4e3f \
 			$deps
 		MACOSX_DEPLOYMENT_TARGET=10.15
 		OBS_QT_VERSION_MAJOR=6
@@ -51,8 +51,8 @@ case "$obs-$arch" in
 			252e6684f43ab9c6f262c73af739e2296ce391b998da2c4ee04c254aaa07db18 \
 			$deps
 		$d0/download-extract.sh \
-			http://www.nagater.net/obs-studio/obs-studio-devel-28.0.0-beta1-177-g9d3dc5c99-macos-universal.tar.gz \
-			1116ef51bbb517f4f94844157efd42ec37c573925e6d4556b520e7aed7e48685 \
+			http://www.nagater.net/obs-studio/obs-studio-devel-28.0.0-beta1-182-g46c129fc1-macos-universal.tar.gz \
+			2a4244405858786a53fad4d214bff0070cb61c76698f14ea62a9f9125ef950f0 \
 			$deps
 		MACOSX_DEPLOYMENT_TARGET=11.0
 		OBS_QT_VERSION_MAJOR=6
