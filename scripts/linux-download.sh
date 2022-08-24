@@ -79,15 +79,15 @@ case "$obs" in
 	28 | 28.*)
 		case "$ubuntu" in
 			ubuntu-20.04)
-				curl -O http://www.nagater.net/obs-studio/obs-studio-28.0.0-beta1-9d3dc5c99-ubuntu-20.04.deb
+				curl -O http://www.nagater.net/obs-studio/obs-studio-28.0.0-beta1-11c071ec8-ubuntu-20.04.deb
 				sha256sum <<-EOF
-1b48138d7367e574b3760b3cd3b9cd2523678acbe7e0feeee28a610352159732  obs-studio-28.0.0-beta1-9d3dc5c99-ubuntu-20.04.deb
+4f3bfa7afb90a7e26cf2070ab83a5f2c6630fa52fe18b1201aeb3043ff88a226  obs-studio-28.0.0-beta1-11c071ec8-ubuntu-20.04.deb
 EOF
 				;;
 			ubuntu-22.04)
-				curl -O http://www.nagater.net/obs-studio/obs-studio-28.0.0-beta1-9d3dc5c99-ubuntu-22.04.deb
+				curl -O http://www.nagater.net/obs-studio/obs-studio-28.0.0-beta1-11c071ec8-ubuntu-22.04.deb
 				sha256sum <<-EOF
-8032a6e4182931fdcf912d53434cda0bae5714d9f2f134bbb5f1f8c7d1a1882f  obs-studio-28.0.0-beta1-9d3dc5c99-ubuntu-22.04.deb
+52ec56fd40e2d036466f244c707d7ab7d2abc539cc4245d7206cccc022ec84f7  obs-studio-28.0.0-beta1-11c071ec8-ubuntu-22.04.deb
 EOF
 				;;
 		esac
