@@ -73,7 +73,7 @@ fi
 
 case "$obs" in
 	27 | 27.*)
-		curl -o /tmp/obs-studio-devel.deb http://www.nagater.net/obs-studio/obs-studio-27.2.0-760-ga4909a667-${ubuntu}.deb
+		curl -o /tmp/obs-studio-devel.deb http://www.nagater.net/obs-studio/obs-studio-27.2.0-771-g89d7653bb-${ubuntu}.deb
 		sudo apt install /tmp/obs-studio-devel.deb
 		;;
 	28 | 28.*)
