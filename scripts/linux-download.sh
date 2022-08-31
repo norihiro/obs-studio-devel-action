@@ -51,9 +51,7 @@ $apt install \
 	cmake ninja-build pkg-config clang clang-format build-essential curl ccache g++ \
 	bzip2 \
 	file \
-	libx11-dev libxcb-randr0-dev libxcb-shm0-dev libxcb-xinerama0-dev libxcomposite-dev libxinerama-dev \
-	libxcb1-dev libx11-xcb-dev libxcb-xfixes0-dev libcmocka-dev libxss-dev libglvnd-dev libgles2-mesa \
-	libgles2-mesa-dev libwayland-dev
+	libcmocka-dev
 
 if ((flg_qt)); then
 	case "$ubuntu/$obs" in
@@ -62,7 +60,9 @@ if ((flg_qt)); then
 			OBS_QT_VERSION_MAJOR=5
 			;;
 		ubuntu-22.04/28*)
-			$apt install qt6-base-dev qt6-base-private-dev libqt6svg6-dev qt6-wayland
+			$apt install qt6-base-dev qt6-base-private-dev libqt6svg6-dev qt6-wayland \
+				libxcb1-dev libx11-xcb-dev libwayland-dev \
+				libglvnd-dev libgles2-mesa libgles2-mesa-dev
 			OBS_QT_VERSION_MAJOR=6
 			;;
 		*)
