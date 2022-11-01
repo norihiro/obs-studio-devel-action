@@ -84,13 +84,13 @@ runs:
             -uri 'http://www.nagater.net/obs-studio/obs-plugintemplate-20220727-96382bd-windows-${{ matrix.arch }}-mod.zip' `
             -OutFile 'obs-studio-devel.zip' `
             -ErrorAction stop
-          Write-Output '::set-output name=OBS_QT_VERSION_MAJOR::5'
+          Add-Content -Path $Env:GITHUB_OUTPUT -value 'OBS_QT_VERSION_MAJOR=5'
         } elseif (${{ inputs.obs }} -eq 28) {
           Invoke-WebRequest `
             -uri 'http://www.nagater.net/obs-studio/obs-plugintemplate-obs-28-04fefe7d6-windows-${{ matrix.arch }}.zip' `
             -OutFile 'obs-studio-devel.zip' `
             -ErrorAction stop
-          Write-Output '::set-output name=OBS_QT_VERSION_MAJOR::6'
+          Add-Content -Path $Env:GITHUB_OUTPUT -value 'OBS_QT_VERSION_MAJOR=6'
         }
         certutil.exe -hashfile 'obs-studio-devel.zip' SHA1
         Expand-Archive `
