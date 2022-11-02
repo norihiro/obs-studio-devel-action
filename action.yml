@@ -81,7 +81,7 @@ runs:
       run: |
         if (${{ inputs.obs }} -eq 27) {
           Invoke-WebRequest `
-            -uri 'http://www.nagater.net/obs-studio/obs-plugintemplate-20220727-96382bd-windows-${{ matrix.arch }}-mod.zip' `
+            -uri 'https://github.com/norihiro/obs-plugintemplate/releases/download/27.2.4-nk0-windows/obs-plugintemplate-20221102-ac3d3c9e3-windows-x64.zip' `
             -OutFile 'obs-studio-devel.zip' `
             -ErrorAction stop
           Add-Content -Path $Env:GITHUB_OUTPUT -value 'OBS_QT_VERSION_MAJOR=5'
