@@ -87,7 +87,7 @@ runs:
           Add-Content -Path $Env:GITHUB_OUTPUT -value 'OBS_QT_VERSION_MAJOR=5'
         } elseif (${{ inputs.obs }} -eq 28) {
           Invoke-WebRequest `
-            -uri 'http://www.nagater.net/obs-studio/obs-plugintemplate-obs-28-04fefe7d6-windows-${{ matrix.arch }}.zip' `
+            -uri 'https://github.com/norihiro/obs-plugintemplate/releases/download/28.0-devel-windows-20220803/obs-plugintemplate-obs-28-04fefe7d6-windows-x64.zip' `
             -OutFile 'obs-studio-devel.zip' `
             -ErrorAction stop
           Add-Content -Path $Env:GITHUB_OUTPUT -value 'OBS_QT_VERSION_MAJOR=6'
