@@ -98,7 +98,8 @@ EOF
 		# copied from https://ppa.launchpadcontent.net/obsproject/obs-studio/ubuntu/pool/main/o/obs-studio/obs-studio_30.0.0-0obsproject1~jammy_amd64.deb
 		curl -O http://www.nagater.net/obs-studio/obs-studio_30.0.0-0obsproject1~jammy_amd64.deb
 		sha256sum <<<'14ad30bda71195c35e68076e1d53119ba767f424108ed4e42a3331f83676fa00  obs-studio_30.0.0-0obsproject1~jammy_amd64.deb'
-		sudo apt install obs-studio*.deb
+		mv obs-studio*.deb /tmp/obs-studio.deb
+		sudo apt install /tmp/obs-studio.deb
 		;;
 esac
 
