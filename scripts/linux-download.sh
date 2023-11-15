@@ -59,7 +59,7 @@ if ((flg_qt)); then
 			$apt install qtbase5-dev qtbase5-private-dev libqt5svg5-dev qtwayland5
 			OBS_QT_VERSION_MAJOR=5
 			;;
-		ubuntu-22.04/28*)
+		ubuntu-22.04/28* | ubuntu-22.04/30*)
 			$apt install qt6-base-dev qt6-base-private-dev libqt6svg6-dev qt6-wayland \
 				libxcb1-dev libx11-xcb-dev libwayland-dev \
 				libglvnd-dev libgles2-mesa libgles2-mesa-dev
@@ -93,6 +93,13 @@ EOF
 		esac
 		mv obs-studio-*.deb /tmp/obs-studio-devel.deb
 		sudo apt install /tmp/obs-studio-devel.deb
+		;;
+	30 | 30.*)
+		# copied from https://ppa.launchpadcontent.net/obsproject/obs-studio/ubuntu/pool/main/o/obs-studio/obs-studio_30.0.0-0obsproject1~jammy_amd64.deb
+		curl -O http://www.nagater.net/obs-studio/obs-studio_30.0.0-0obsproject1~jammy_amd64.deb
+		sha256sum <<<'14ad30bda71195c35e68076e1d53119ba767f424108ed4e42a3331f83676fa00  obs-studio_30.0.0-0obsproject1~jammy_amd64.deb'
+		mv obs-studio*.deb /tmp/obs-studio.deb
+		sudo apt install /tmp/obs-studio.deb
 		;;
 esac
 
