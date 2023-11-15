@@ -33,16 +33,15 @@ inputs:
 outputs:
   OBS_QT_VERSION_MAJOR:
     description: "QT major version required by OBS"
-    value: ${{ steps.macOS.outputs.OBS_QT_VERSION_MAJOR }}${{ steps.Linux.outputs.OBS_QT_VERSION_MAJOR }}${{ steps.Windows.outputs.OBS_QT_VERSION_MAJOR }}
+    value: ${{ steps.download.outputs.OBS_QT_VERSION_MAJOR }}
   MACOSX_DEPLOYMENT_TARGET:
     description: "Deployment target version for macOS"
     value: ${{ steps.macOS.outputs.MACOSX_DEPLOYMENT_TARGET }}
 runs:
   using: 'composite'
   steps:
-    - name: Download for Linux
-      id: Linux
-      if: ${{ runner.os == 'Linux' }}
+    - name: Download
+      id: download
       shell: bash
       run: |
         if test ${{ inputs.verbose }} != false; then
@@ -55,44 +54,21 @@ runs:
         else
           flg_qt=--no-qt
         fi
-        "${bash[@]}" ${{ github.action_path }}/"scripts/linux-download.sh" -a -o "${{ inputs.obs }}" -u "${{ inputs.ubuntu }}" $flg_qt
-
-    - name: Download for macOS
-      id: macOS
-      if: ${{ runner.os == 'macOS' }}
-      shell: bash
-      run: |
-        if test ${{ inputs.verbose }} != false; then
-          bash=(bash -x)
-        else
-          bash=(bash)
-        fi
-        if test ${{ inputs.qt }} != false; then
-          flg_qt=--qt
-        else
-          flg_qt=--no-qt
-        fi
-        "${bash[@]}" ${{ github.action_path }}/"scripts/macos-download.sh" -a "${{ inputs.arch }}" -o "${{ inputs.obs }}" -d "${{ inputs.path }}" $flg_qt
-
-    - name: Download for Windows
-      id: Windows
-      if: ${{ runner.os == 'Windows' }}
-      shell: pwsh
-      run: |
-        if (${{ inputs.obs }} -eq 27) {
-          Invoke-WebRequest `
-            -uri 'https://github.com/norihiro/obs-plugintemplate/releases/download/27.2.4-nk0-windows/obs-plugintemplate-20221102-ac3d3c9e3-windows-x64.zip' `
-            -OutFile 'obs-studio-devel.zip' `
-            -ErrorAction stop
-          Add-Content -Path $Env:GITHUB_OUTPUT -value 'OBS_QT_VERSION_MAJOR=5'
-        } elseif (${{ inputs.obs }} -eq 28) {
-          Invoke-WebRequest `
-            -uri 'https://github.com/norihiro/obs-plugintemplate/releases/download/28.0-devel-windows-20220803/obs-plugintemplate-obs-28-04fefe7d6-windows-x64.zip' `
-            -OutFile 'obs-studio-devel.zip' `
-            -ErrorAction stop
-          Add-Content -Path $Env:GITHUB_OUTPUT -value 'OBS_QT_VERSION_MAJOR=6'
-        }
-        certutil.exe -hashfile 'obs-studio-devel.zip' SHA1
-        Expand-Archive `
-          -path 'obs-studio-devel.zip' `
-          -DestinationPath '.'
+        case "${{ runner.os }}" in
+          Linux)
+            script=scripts/linux-download.sh
+            script_opts=(-a -o "${{ inputs.obs }}" -u "${{ inputs.ubuntu }}" $flg_qt)
+            ;;
+          macOS)
+            script=scripts/macos-download.sh
+            script_opts=(-a "${{ inputs.arch }}" -o "${{ inputs.obs }}" -d "${{ inputs.path }}" $flg_qt)
+            ;;
+          Windows)
+            script=scripts/windows-download.sh
+            script_opts=($flg_qt)
+            ;;
+          *)
+            echo "Error: unknown OS ${{ runner.os }}"
+            exit 1
+        esac
+        "${bash[@]}" '${{ github.action_path }}'/"$script" -o "${{ inputs.obs }}" "${script_opts[@]}"
