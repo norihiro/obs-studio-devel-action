@@ -31,12 +31,21 @@ case "$obs" in
 		curl -o obs-studio-devel.zip --location \
 			'https://github.com/norihiro/obs-plugintemplate/releases/download/27.2.4-nk0-windows/obs-plugintemplate-20221102-ac3d3c9e3-windows-x64.zip'
 		sha1sum -c <<<'ea111232d59d7904725c80869510dc35106a38dd obs-studio-devel.zip'
+		unzip obs-studio-devel.zip
 		OBS_QT_VERSION_MAJOR=5
 		;;
 	28 | 28.*)
 		curl -o obs-studio-devel.zip --location \
 			'https://github.com/norihiro/obs-plugintemplate/releases/download/28.0-devel-windows-20220803/obs-plugintemplate-obs-28-04fefe7d6-windows-x64.zip'
 		sha1sum -c <<<'4c262a069443f7bdc7e4c64321c028a45340059d obs-studio-devel.zip'
+		unzip obs-studio-devel.zip
+		OBS_QT_VERSION_MAJOR=6
+		;;
+	30 | 30.*)
+		curl -o obs-plugintemplate.tar.gz --location \
+			'http://spr.nagater.net/obs-studio/obs-plugintemplate-b449baf52-windows-x64.tar.gz'
+		sha1sum -c <<<'3f32d859b707811b6c6a756bac2de53ef793ac13 obs-plugintemplate.tar.gz'
+		tar xzf obs-plugintemplate.tar.gz
 		OBS_QT_VERSION_MAJOR=6
 		;;
 	*)
@@ -44,6 +53,5 @@ case "$obs" in
 		exit 1
 esac
 
-unzip obs-studio-devel.zip
 
 echo "OBS_QT_VERSION_MAJOR=$OBS_QT_VERSION_MAJOR" >> $GITHUB_OUTPUT
