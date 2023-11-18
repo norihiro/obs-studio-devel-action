@@ -11,6 +11,8 @@ ubuntu=''
 apt=true
 flg_qt=1
 
+PLUGIN_CMAKE_OPTIONS=''
+
 while (($# > 0)); do
 	case "$1" in
 		-o)
@@ -58,12 +60,14 @@ if ((flg_qt)); then
 		ubuntu-20.04/* | */27*)
 			$apt install qtbase5-dev qtbase5-private-dev libqt5svg5-dev qtwayland5
 			OBS_QT_VERSION_MAJOR=5
+			PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=5"
 			;;
 		ubuntu-22.04/28* | ubuntu-22.04/30*)
 			$apt install qt6-base-dev qt6-base-private-dev libqt6svg6-dev qt6-wayland \
 				libxcb1-dev libx11-xcb-dev libwayland-dev \
 				libglvnd-dev libgles2-mesa libgles2-mesa-dev
 			OBS_QT_VERSION_MAJOR=6
+			PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=6"
 			;;
 		*)
 			echo "Error: Unsupported OS OBS combination $ubuntu/$obs" >&2
@@ -75,6 +79,12 @@ case "$obs" in
 	27 | 27.*)
 		curl -o /tmp/obs-studio-devel.deb http://www.nagater.net/obs-studio/obs-studio-27.2.0-771-g89d7653bb-${ubuntu}.deb
 		sudo apt install /tmp/obs-studio-devel.deb
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+			-DCMAKE_INSTALL_PREFIX=/usr
+			-DCMAKE_INSTALL_LIBDIR=/usr/lib/
+			-DLINUX_PORTABLE=OFF
+			-DCPACK_DEBIAN_PACKAGE_DEPENDS='obs-studio (>= 27), obs-studio (<< 28)'
+			"
 		;;
 	28 | 28.*)
 		case "$ubuntu" in
@@ -93,6 +103,11 @@ EOF
 		esac
 		mv obs-studio-*.deb /tmp/obs-studio-devel.deb
 		sudo apt install /tmp/obs-studio-devel.deb
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+			-DCMAKE_INSTALL_PREFIX=/usr
+			-DLINUX_PORTABLE=OFF
+			-DCPACK_DEBIAN_PACKAGE_DEPENDS='obs-studio (>= 28)'
+			"
 		;;
 	30 | 30.*)
 		# copied from https://ppa.launchpadcontent.net/obsproject/obs-studio/ubuntu/pool/main/o/obs-studio/obs-studio_30.0.0-0obsproject1~jammy_amd64.deb
@@ -100,7 +115,13 @@ EOF
 		sha256sum <<<'14ad30bda71195c35e68076e1d53119ba767f424108ed4e42a3331f83676fa00  obs-studio_30.0.0-0obsproject1~jammy_amd64.deb'
 		mv obs-studio*.deb /tmp/obs-studio.deb
 		sudo apt install /tmp/obs-studio.deb
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+			-DCMAKE_INSTALL_PREFIX=/usr
+			-DLINUX_PORTABLE=OFF
+			-DCPACK_DEBIAN_PACKAGE_DEPENDS='obs-studio (>= 30)'
+			"
 		;;
 esac
 
 echo "OBS_QT_VERSION_MAJOR=$OBS_QT_VERSION_MAJOR" >> $GITHUB_OUTPUT
+echo "PLUGIN_CMAKE_OPTIONS=$(tr '\n' ' ' <<<"$PLUGIN_CMAKE_OPTIONS" | sed -e 's/^ *//' -e 's/ *$//' -e 's/  */ /')" >> $GITHUB_OUTPUT

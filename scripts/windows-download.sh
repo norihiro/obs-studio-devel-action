@@ -9,6 +9,8 @@ d0="$(cd "$(dirname $0)" && pwd)"
 obs=27
 flg_qt=1
 
+PLUGIN_CMAKE_OPTIONS=''
+
 while (($# > 0)); do
 	case "$1" in
 		-o)
@@ -33,6 +35,11 @@ case "$obs" in
 		sha1sum -c <<<'ea111232d59d7904725c80869510dc35106a38dd obs-studio-devel.zip'
 		unzip obs-studio-devel.zip
 		OBS_QT_VERSION_MAJOR=5
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+		-DQT_VERSION=5
+		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-x64
+		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-x64
+		"
 		;;
 	28 | 28.*)
 		curl -o obs-studio-devel.zip --location \
@@ -40,6 +47,11 @@ case "$obs" in
 		sha1sum -c <<<'4c262a069443f7bdc7e4c64321c028a45340059d obs-studio-devel.zip'
 		unzip obs-studio-devel.zip
 		OBS_QT_VERSION_MAJOR=6
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+		-DQT_VERSION=6
+		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-x64
+		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-x64
+		"
 		;;
 	30 | 30.*)
 		curl -o obs-plugintemplate.tar.gz --location \
@@ -47,6 +59,10 @@ case "$obs" in
 		sha1sum -c <<<'3f32d859b707811b6c6a756bac2de53ef793ac13 obs-plugintemplate.tar.gz'
 		tar xzf obs-plugintemplate.tar.gz
 		OBS_QT_VERSION_MAJOR=6
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=6
+		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-x64
+		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-x64
+		"
 		;;
 	*)
 		echo "Error: Unknown OBS version $obs" >&2
@@ -55,3 +71,4 @@ esac
 
 
 echo "OBS_QT_VERSION_MAJOR=$OBS_QT_VERSION_MAJOR" >> $GITHUB_OUTPUT
+echo "PLUGIN_CMAKE_OPTIONS=$(tr '\n' ' ' <<<"$PLUGIN_CMAKE_OPTIONS" | sed -e 's/^ *//' -e 's/ *$//' -e 's/  */ /')" >> $GITHUB_OUTPUT
