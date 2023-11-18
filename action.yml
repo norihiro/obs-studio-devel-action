@@ -36,7 +36,11 @@ outputs:
     value: ${{ steps.download.outputs.OBS_QT_VERSION_MAJOR }}
   MACOSX_DEPLOYMENT_TARGET:
     description: "Deployment target version for macOS"
-    value: ${{ steps.macOS.outputs.MACOSX_DEPLOYMENT_TARGET }}
+    value: ${{ steps.download.outputs.MACOSX_DEPLOYMENT_TARGET }}
+  PLUGIN_CMAKE_OPTIONS:
+    description: "Recommended CMake options to build plugins"
+    value: ${{ steps.download.outputs.PLUGIN_CMAKE_OPTIONS }}
+
 runs:
   using: 'composite'
   steps:
