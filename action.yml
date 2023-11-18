@@ -40,6 +40,9 @@ outputs:
   PLUGIN_CMAKE_OPTIONS:
     description: "Recommended CMake options to build plugins"
     value: ${{ steps.download.outputs.PLUGIN_CMAKE_OPTIONS }}
+  PLUGIN_CMAKE_OPTIONS_PS:
+    description: "Recommended CMake options to build plugins for powershell"
+    value: ${{ steps.download.outputs.PLUGIN_CMAKE_OPTIONS_PS }}
 
 runs:
   using: 'composite'

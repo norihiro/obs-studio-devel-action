@@ -69,6 +69,9 @@ case "$obs" in
 		exit 1
 esac
 
+PLUGIN_CMAKE_OPTIONS="$(tr '\n' ' ' <<<"$PLUGIN_CMAKE_OPTIONS" | sed -e 's/^ *//' -e 's/ *$//' -e 's/\s\+/ /g')"
+PLUGIN_CMAKE_OPTIONS_PS="$(sed -e 's;=/d/;=d:/;g' <<<"$PLUGIN_CMAKE_OPTIONS")"
 
 echo "OBS_QT_VERSION_MAJOR=$OBS_QT_VERSION_MAJOR" >> $GITHUB_OUTPUT
-echo "PLUGIN_CMAKE_OPTIONS=$(tr '\n' ' ' <<<"$PLUGIN_CMAKE_OPTIONS" | sed -e 's/^ *//' -e 's/ *$//' -e 's/  */ /')" >> $GITHUB_OUTPUT
+echo "PLUGIN_CMAKE_OPTIONS=$PLUGIN_CMAKE_OPTIONS" >> $GITHUB_OUTPUT
+echo "PLUGIN_CMAKE_OPTIONS_PS=$PLUGIN_CMAKE_OPTIONS_PS" >> $GITHUB_OUTPUT

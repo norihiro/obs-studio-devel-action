@@ -7,6 +7,8 @@ d0="$(cd "$(dirname $0)" && pwd)"
 
 flg_qt=1
 
+PLUGIN_CMAKE_OPTIONS=''
+
 while (($# > 0)); do
 	case "$1" in
 		-a)
@@ -103,5 +105,15 @@ case "$obs-$arch" in
 		;;
 esac
 
+if ((flg_qt)); then
+	PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=$OBS_QT_VERSION_MAJOR"
+fi
+
+PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+-DCMAKE_FRAMEWORK_PATH='$deps/Frameworks;$deps/lib/cmake;$deps'
+-DCMAKE_OSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET}
+"
+
 echo "MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET" >> $GITHUB_OUTPUT
 echo "OBS_QT_VERSION_MAJOR=$OBS_QT_VERSION_MAJOR" >> $GITHUB_OUTPUT
+echo "PLUGIN_CMAKE_OPTIONS=$(tr '\n' ' ' <<<"$PLUGIN_CMAKE_OPTIONS" | sed -e 's/^ *//' -e 's/ *$//' -e 's/\s\+/ /g')" >> $GITHUB_OUTPUT
