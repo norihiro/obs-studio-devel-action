@@ -55,8 +55,8 @@ case "$obs" in
 		;;
 	30 | 30.*)
 		curl -o obs-plugintemplate.tar.gz --location \
-			'http://spr.nagater.net/obs-studio/obs-plugintemplate-b449baf52-windows-x64.tar.gz'
-		sha1sum -c <<<'3f32d859b707811b6c6a756bac2de53ef793ac13 obs-plugintemplate.tar.gz'
+			'https://github.com/norihiro/obs-plugintemplate/releases/download/30.0.0-dev1/obs-plugintemplate-e0d2ba5da-windows-x64.tar.gz'
+		sha1sum -c <<<'8265cc7bf8d95cef0cf2ae502c1069f1b0655ff0 obs-plugintemplate.tar.gz'
 		tar xzf obs-plugintemplate.tar.gz
 		OBS_QT_VERSION_MAJOR=6
 		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=6
