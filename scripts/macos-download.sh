@@ -50,6 +50,7 @@ case "$obs-$arch" in
 			$deps
 		MACOSX_DEPLOYMENT_TARGET=10.15
 		OBS_QT_VERSION_MAJOR=6
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DMACOSX_PLUGIN_BUNDLE_TYPE=BNDL"
 		;;
 	28-arm64 | 28-universal)
 		$d0/download-extract.sh \
@@ -66,6 +67,7 @@ case "$obs-$arch" in
 			$deps
 		MACOSX_DEPLOYMENT_TARGET=11.0
 		OBS_QT_VERSION_MAJOR=6
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DMACOSX_PLUGIN_BUNDLE_TYPE=BNDL"
 		;;
 	27-x86_64)
 		$d0/download-extract.sh \
