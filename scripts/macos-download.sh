@@ -35,6 +35,32 @@ done
 brew bundle --file "$d0/Brewfile"
 
 case "$obs-$arch" in
+	30-x86_64 | 30-arm64 | 30-universal)
+		$d0/download-extract.sh \
+			"https://github.com/obsproject/obs-deps/releases/download/2023-11-03/macos-deps-2023-11-03-universal.tar.xz" \
+			90c2fc069847ec2768dcc867c1c63b112c615ed845a907dc44acab7a97181974 \
+			$deps
+		test $flg_qt -gt 0 && $d0/download-extract.sh \
+			"https://github.com/obsproject/obs-deps/releases/download/2023-11-03/macos-deps-qt6-2023-11-03-universal.tar.xz" \
+			ba4a7152848da0053f63427a2a2cb0a199af3992997c0db08564df6f48c9db98 \
+			$deps
+		obsdir=/Users/runner/work/obs-studio/obs-studio
+		mkdir -p $obsdir
+		$d0/download-extract.sh \
+			http://www.nagater.net/obs-studio/obs-studio-devel-29.1.0-799-g35bb15f14-macos-macos-universal.tar.gz \
+			696490cdf9de55b489bf0bc1715d77327c775b4a62582a233008b6539f7d23af \
+			$obsdir
+		if test "$arch" == x86_64; then
+			MACOSX_DEPLOYMENT_TARGET=10.15
+		else
+			MACOSX_DEPLOYMENT_TARGET=11.0
+		fi
+		OBS_QT_VERSION_MAJOR=6
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+		-DMACOSX_PLUGIN_BUNDLE_TYPE=BNDL
+		-DCMAKE_FRAMEWORK_PATH='$obsdir/build_macos;$obsdir/build_macos/UI/obs-frontend-api;$deps/Frameworks;$deps/lib/cmake;$deps'
+		"
+		;;
 	28-x86_64)
 		$d0/download-extract.sh \
 			"https://github.com/obsproject/obs-deps/releases/download/2022-08-02/macos-deps-2022-08-02-x86_64.tar.xz" \
@@ -50,7 +76,10 @@ case "$obs-$arch" in
 			$deps
 		MACOSX_DEPLOYMENT_TARGET=10.15
 		OBS_QT_VERSION_MAJOR=6
-		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DMACOSX_PLUGIN_BUNDLE_TYPE=BNDL"
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+		-DMACOSX_PLUGIN_BUNDLE_TYPE=BNDL
+		-DCMAKE_FRAMEWORK_PATH='$deps/Frameworks;$deps/lib/cmake;$deps'
+		"
 		;;
 	28-arm64 | 28-universal)
 		$d0/download-extract.sh \
@@ -67,7 +96,10 @@ case "$obs-$arch" in
 			$deps
 		MACOSX_DEPLOYMENT_TARGET=11.0
 		OBS_QT_VERSION_MAJOR=6
-		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DMACOSX_PLUGIN_BUNDLE_TYPE=BNDL"
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+		-DMACOSX_PLUGIN_BUNDLE_TYPE=BNDL
+		-DCMAKE_FRAMEWORK_PATH='$deps/Frameworks;$deps/lib/cmake;$deps'
+		"
 		;;
 	27-x86_64)
 		$d0/download-extract.sh \
@@ -84,6 +116,9 @@ case "$obs-$arch" in
 			$deps
 		MACOSX_DEPLOYMENT_TARGET=10.13
 		OBS_QT_VERSION_MAJOR=5
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+		-DCMAKE_FRAMEWORK_PATH='$deps/Frameworks;$deps/lib/cmake;$deps'
+		"
 		;;
 	27-arm64)
 		$d0/download-extract.sh \
@@ -100,6 +135,9 @@ case "$obs-$arch" in
 			$deps
 		MACOSX_DEPLOYMENT_TARGET=11.0
 		OBS_QT_VERSION_MAJOR=5
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+		-DCMAKE_FRAMEWORK_PATH='$deps/Frameworks;$deps/lib/cmake;$deps'
+		"
 		;;
 	*)
 		echo "Error: unknown architecture '$arch' OBS '$obs' combination." >&2
@@ -112,7 +150,6 @@ if ((flg_qt)); then
 fi
 
 PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
--DCMAKE_FRAMEWORK_PATH='$deps/Frameworks;$deps/lib/cmake;$deps'
 -DCMAKE_OSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET}
 "
 
