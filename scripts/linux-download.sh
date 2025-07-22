@@ -37,7 +37,9 @@ while (($# > 0)); do
 done
 
 if test -z "$ubuntu"; then
-	if grep -q 'Ubuntu 22.04' /etc/issue; then
+	if grep -q 'Ubuntu 24.04' /etc/issue; then
+		ubuntu='ubuntu-24.04'
+	elif grep -q 'Ubuntu 22.04' /etc/issue; then
 		ubuntu='ubuntu-22.04'
 	elif grep -q 'Ubuntu 20.04' /etc/issue; then
 		ubuntu='ubuntu-20.04'
@@ -66,6 +68,13 @@ if ((flg_qt)); then
 			$apt install qt6-base-dev qt6-base-private-dev libqt6svg6-dev qt6-wayland \
 				libxcb1-dev libx11-xcb-dev libwayland-dev \
 				libglvnd-dev libgles2-mesa libgles2-mesa-dev
+			OBS_QT_VERSION_MAJOR=6
+			PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=6"
+			;;
+		ubuntu-24.04/31)
+			$apt install qt6-base-dev qt6-base-private-dev libqt6svg6-dev qt6-wayland \
+				libxcb1-dev libx11-xcb-dev libwayland-dev \
+				libglvnd-dev
 			OBS_QT_VERSION_MAJOR=6
 			PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=6"
 			;;
@@ -119,6 +128,17 @@ EOF
 			-DCMAKE_INSTALL_PREFIX=/usr
 			-DLINUX_PORTABLE=OFF
 			-DCPACK_DEBIAN_PACKAGE_DEPENDS='obs-studio (>= 30)'
+			"
+		;;
+	31 | 31.*)
+		# copied from https://ppa.launchpadcontent.net/obsproject/obs-studio/ubuntu/pool/main/o/obs-studio/
+		curl -o /tmp/obs-studio.deb http://www.nagater.net/obs-studio/obs-studio_31.1.1-0obsproject1~noble_amd64.deb
+		sha256sum -c - <<<'4d6c44540c73e937e23cf47ef180d0ef825fbfb63755866f377aa63b9eb8e7be  /tmp/obs-studio.deb'
+		sudo apt install -y /tmp/obs-studio.deb
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+			-DCMAKE_INSTALL_PREFIX=/usr
+			-DLINUX_PORTABLE=OFF
+			-DCPACK_DEBIAN_PACKAGE_DEPENDS='obs-studio (>= 31)'
 			"
 		;;
 esac
