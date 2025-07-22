@@ -121,6 +121,17 @@ EOF
 			-DCPACK_DEBIAN_PACKAGE_DEPENDS='obs-studio (>= 30)'
 			"
 		;;
+	31 | 31.*)
+		# copied from https://ppa.launchpadcontent.net/obsproject/obs-studio/ubuntu/pool/main/o/obs-studio/obs-studio_31.1.0-0obsproject1~oracular_amd64.deb
+		curl -o /tmp/obs-studio.deb http://www.nagater.net/obs-studio/obs-studio_31.1.0-0obsproject1~oracular_amd64.deb
+		sha256sum <<<'3332688dd85e6f2237b2020e92f9f05e9d8f31e97ba590709877f12b9901fabd  /tmp/obs-studio.deb'
+		sudo apt install /tmp/obs-studio.deb
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+			-DCMAKE_INSTALL_PREFIX=/usr
+			-DLINUX_PORTABLE=OFF
+			-DCPACK_DEBIAN_PACKAGE_DEPENDS='obs-studio (>= 31)'
+			"
+		;;
 esac
 
 echo "OBS_QT_VERSION_MAJOR=$OBS_QT_VERSION_MAJOR" >> $GITHUB_OUTPUT
