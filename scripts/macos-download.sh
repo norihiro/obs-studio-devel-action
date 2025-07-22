@@ -35,6 +35,28 @@ done
 brew bundle --file "$d0/Brewfile"
 
 case "$obs-$arch" in
+	31-x86_64 | 31-arm64 | 31-universal)
+		$d0/download-extract.sh \
+			"https://github.com/obsproject/obs-deps/releases/download/2024-09-12/macos-deps-2024-09-12-universal.tar.xz" \
+			c857b211ee378772994b632036e1e5befe66b37e85286cb8e3cefc1435d5220a \
+			$deps
+		test $flg_qt -gt 0 && $d0/download-extract.sh \
+			"https://github.com/obsproject/obs-deps/releases/download/2024-09-12/macos-deps-qt6-2024-09-12-universal.tar.xz" \
+			34a2de6b7f4d4d58fc5a15a4dba49a61d81a4045d0cedfc1a1f08c0dfb8047cf \
+			$deps
+		obsdir=/Users/runner/work/obs-studio/obs-studio
+		mkdir -p $obsdir
+		$d0/download-extract.sh \
+			http://www.nagater.net/obs-studio/obs-studio-devel-29.1.0-1924-g3c78be27f-macos-macos-universal.tar.gz \
+			d6ce19945667cfdf730b73e760081b3bda97ed1febeafd9f859f570287c8ef3a \
+			$obsdir
+		MACOSX_DEPLOYMENT_TARGET=11.0
+		OBS_QT_VERSION_MAJOR=6
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+		-DMACOSX_PLUGIN_BUNDLE_TYPE=BNDL
+		-DCMAKE_FRAMEWORK_PATH='$obsdir/build_macos;$obsdir/build_macos/UI/obs-frontend-api;$deps/Frameworks;$deps/lib/cmake;$deps'
+		"
+		;;
 	30-x86_64 | 30-arm64 | 30-universal)
 		$d0/download-extract.sh \
 			"https://github.com/obsproject/obs-deps/releases/download/2023-11-03/macos-deps-2023-11-03-universal.tar.xz" \
