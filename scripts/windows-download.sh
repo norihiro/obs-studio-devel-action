@@ -64,6 +64,17 @@ case "$obs" in
 		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-x64
 		"
 		;;
+	31 | 31.*)
+		curl -o obs-plugintemplate.tar.gz --location \
+			'https://github.com/norihiro/obs-plugintemplate/releases/download/31.1.1-dev0/obs-plugintemplate-f6bf43141-windows-x64.tar.gz'
+		sha256sum -c <<<'235f9513f98d51b92b160e01938765d5545b3c500c0081dbe74febab5456b8a2 obs-plugintemplate.tar.gz'
+		tar xzf obs-plugintemplate.tar.gz
+		OBS_QT_VERSION_MAJOR=6
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=6
+		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-x64
+		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-x64
+		"
+		;;
 	*)
 		echo "Error: Unknown OBS version $obs" >&2
 		exit 1
