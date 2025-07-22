@@ -13,7 +13,7 @@ retry=5
 
 for ((i=0; i<retry; i++)); do
         curl --location -o "$t" "$url"
-        if sha256sum -c <<<"$sum $t"; then
+        if sha256sum -c - <<<"$sum $t"; then
                 break;
         fi
         rm "$t"
