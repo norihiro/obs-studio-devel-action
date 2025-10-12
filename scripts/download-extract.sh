@@ -26,8 +26,11 @@ case "$b" in
         *.tar.xz)
                 tar xJf "$t"
                 ;;
-        *.tar.gz)
+        *.tar.bz2)
                 tar xzf "$t"
+                ;;
+        *.tar.gz)
+                tar xjf "$t"
                 ;;
         *)
                 echo "Error: Unsupported format to extract $b" >&2
