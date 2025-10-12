@@ -78,6 +78,13 @@ if ((flg_qt)); then
 			OBS_QT_VERSION_MAJOR=6
 			PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=6"
 			;;
+		ubuntu-24.04/32*)
+			$apt install qt6-base-dev qt6-base-private-dev libqt6svg6-dev qt6-wayland \
+				libxcb1-dev libx11-xcb-dev libwayland-dev \
+				libglvnd-dev libsimde-dev
+			OBS_QT_VERSION_MAJOR=6
+			PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=6"
+			;;
 		*)
 			echo "Error: Unsupported OS OBS combination $ubuntu/$obs" >&2
 			exit 1 ;;
@@ -139,6 +146,16 @@ EOF
 			-DCMAKE_INSTALL_PREFIX=/usr
 			-DLINUX_PORTABLE=OFF
 			-DCPACK_DEBIAN_PACKAGE_DEPENDS='obs-studio (>= 31)'
+			"
+		;;
+	32 | 32.*)
+		curl -o /tmp/obs-studio.deb http://www.nagater.net/obs-studio/obs-studio_32.0.0-0obsproject1~noble_amd64.deb
+		sha256sum -c - <<<'4e53c0c058f7819bbfbab2025290a77be69a2e35b056165da534b4cdbc2bf7e4  /tmp/obs-studio.deb'
+		sudo apt install -y /tmp/obs-studio.deb
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+			-DCMAKE_INSTALL_PREFIX=/usr
+			-DLINUX_PORTABLE=OFF
+			-DCPACK_DEBIAN_PACKAGE_DEPENDS='obs-studio (>= 32)'
 			"
 		;;
 esac
