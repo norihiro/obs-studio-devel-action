@@ -35,6 +35,34 @@ done
 brew bundle --file "$d0/Brewfile"
 
 case "$obs-$arch" in
+	32-x86_64 | 32-arm64 | 32-universal)
+		$d0/download-extract.sh \
+			"https://github.com/obsproject/obs-deps/releases/download/2025-08-23/macos-deps-2025-08-23-universal.tar.xz" \
+			9403bb43fb0a9bb215739a5659ca274fe884dbbbcd22bd9ca781c961fb041c42 \
+			$deps
+		test $flg_qt -gt 0 && $d0/download-extract.sh \
+			"https://github.com/obsproject/obs-deps/releases/download/2025-08-23/macos-deps-qt6-2025-08-23-universal.tar.xz" \
+			990f11638b80a4509e14e8c315f6e4caa0861e37fcd3113a256fbff835ffca29 \
+			$deps
+		obsdir=/Users/runner/work/obs-studio/obs-studio
+		mkdir -p $obsdir
+		$d0/download-extract.sh \
+			http://www.nagater.net/obs-studio/obs-studio-devel-32.0.1-6-g67cffa8bf-macos-macos-universal.tar.gz \
+			7e4c70fc47e751a167c5552e95858e2153bab9b09c1bae78b55b7d8214cd02ee \
+			$obsdir
+		$d0/download-extract.sh \
+			http://www.nagater.net/obs-studio/obs-studio-32.0.1-cmake-finders.tar.bz2 \
+			a7b6390ffdc60853c7cdfbfc0a4dc05c13059e1ad1890ec609b39e35ad1f7d7c \
+			$obsdir
+		brew install --quiet simde
+		MACOSX_DEPLOYMENT_TARGET=13.0
+		OBS_QT_VERSION_MAJOR=6
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+		-DMACOSX_PLUGIN_BUNDLE_TYPE=BNDL
+		-DCMAKE_FRAMEWORK_PATH='$obsdir/build_macos;$obsdir/build_macos/libobs;$obsdir/build_macos/frontend/api;$deps/Frameworks;$deps/lib/cmake;$deps'
+		-DCMAKE_MODULE_PATH='$obsdir/cmake/finders'
+		"
+		;;
 	31-x86_64 | 31-arm64 | 31-universal)
 		$d0/download-extract.sh \
 			"https://github.com/obsproject/obs-deps/releases/download/2024-09-12/macos-deps-2024-09-12-universal.tar.xz" \
