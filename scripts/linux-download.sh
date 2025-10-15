@@ -49,6 +49,10 @@ if test -z "$ubuntu"; then
 	fi
 fi
 
+if test "$apt" != true; then
+	sudo rm -f /var/lib/man-db/auto-update
+fi
+
 $apt update
 $apt install \
 	wget \
