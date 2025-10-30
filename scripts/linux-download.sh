@@ -143,8 +143,8 @@ EOF
 		;;
 	31 | 31.*)
 		# copied from https://ppa.launchpadcontent.net/obsproject/obs-studio/ubuntu/pool/main/o/obs-studio/
-		curl -o /tmp/obs-studio.deb http://www.nagater.net/obs-studio/obs-studio_31.1.1-0obsproject1~noble_amd64.deb
-		sha256sum -c - <<<'4d6c44540c73e937e23cf47ef180d0ef825fbfb63755866f377aa63b9eb8e7be  /tmp/obs-studio.deb'
+		curl -o /tmp/obs-studio.deb http://www.nagater.net/obs-studio/obs-studio_31.0.4-0obsproject1~noble_amd64.deb
+		sha256sum -c - <<<'aa5c63b0a1ca6f3e133702aed7e3e2bb353ed7ec4970f0809b6f4af8b3c096f0  /tmp/obs-studio.deb'
 		sudo apt install -y /tmp/obs-studio.deb
 		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
 			-DCMAKE_INSTALL_PREFIX=/usr
