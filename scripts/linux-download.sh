@@ -53,39 +53,40 @@ if test "$apt" != true; then
 	sudo rm -f /var/lib/man-db/auto-update
 fi
 
-$apt update
-$apt install \
-	wget \
-	cmake ninja-build pkg-config clang clang-format build-essential curl ccache g++ \
-	bzip2 \
-	file \
+apt_pkgs=(
+	wget
+	cmake ninja-build pkg-config clang clang-format build-essential curl ccache g++
+	bzip2
+	file
 	libcmocka-dev
+)
+
+$apt update
+
+case "$obs" in
+	32*)
+		apt_pkgs=("${apt_pkgs[@]}" libsimde-dev)
+		;;
+esac
 
 if ((flg_qt)); then
 	case "$ubuntu/$obs" in
 		ubuntu-20.04/* | */27*)
-			$apt install qtbase5-dev qtbase5-private-dev libqt5svg5-dev qtwayland5
+			apt_pkgs=("${apt_pkgs[@]}" install qtbase5-dev qtbase5-private-dev libqt5svg5-dev qtwayland5)
 			OBS_QT_VERSION_MAJOR=5
 			PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=5"
 			;;
 		ubuntu-22.04/28* | ubuntu-22.04/30*)
-			$apt install qt6-base-dev qt6-base-private-dev libqt6svg6-dev qt6-wayland \
-				libxcb1-dev libx11-xcb-dev libwayland-dev \
-				libglvnd-dev libgles2-mesa libgles2-mesa-dev
+			apt_pkgs=("${apt_pkgs[@]}" qt6-base-dev qt6-base-private-dev libqt6svg6-dev qt6-wayland
+				libxcb1-dev libx11-xcb-dev libwayland-dev
+				libglvnd-dev libgles2-mesa libgles2-mesa-dev)
 			OBS_QT_VERSION_MAJOR=6
 			PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=6"
 			;;
-		ubuntu-24.04/31)
-			$apt install qt6-base-dev qt6-base-private-dev libqt6svg6-dev qt6-wayland \
-				libxcb1-dev libx11-xcb-dev libwayland-dev \
-				libglvnd-dev
-			OBS_QT_VERSION_MAJOR=6
-			PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=6"
-			;;
-		ubuntu-24.04/32*)
-			$apt install qt6-base-dev qt6-base-private-dev libqt6svg6-dev qt6-wayland \
-				libxcb1-dev libx11-xcb-dev libwayland-dev \
-				libglvnd-dev libsimde-dev
+		ubuntu-24.04/31* | ubuntu-24.04/32*)
+			apt_pkgs=("${apt_pkgs[@]}" qt6-base-dev qt6-base-private-dev libqt6svg6-dev qt6-wayland
+				libxcb1-dev libx11-xcb-dev libwayland-dev
+				libglvnd-dev)
 			OBS_QT_VERSION_MAJOR=6
 			PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=6"
 			;;
@@ -94,6 +95,8 @@ if ((flg_qt)); then
 			exit 1 ;;
 	esac
 fi
+
+$apt install -y "${apt_pkgs[@]}"
 
 case "$obs" in
 	27 | 27.*)
