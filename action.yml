@@ -69,7 +69,6 @@ runs:
       with:
         path: /tmp/apt-cache.tar
         key: ${{ runner.os }}-apt-${{ steps.prep.outputs.apt_cache_key }}
-        restore-keys: ${{ runner.os }}-apt-
 
     - name: Download
       id: download
