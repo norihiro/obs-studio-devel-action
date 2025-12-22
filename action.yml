@@ -59,7 +59,7 @@ runs:
           else
             has_qt=''
           fi
-          echo "apt_cache_key=${ubuntu}${has_qt}" >> $GITHUB_OUTPUT
+          echo "apt_cache_key=${ubuntu}-obs${{ inputs.obs }}${has_qt}" >> $GITHUB_OUTPUT
         fi
 
     - name: 'Restore apt cache'
