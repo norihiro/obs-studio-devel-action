@@ -10,6 +10,7 @@ obs=27
 ubuntu=''
 apt=true
 flg_qt=1
+flg_apt_download=0
 
 PLUGIN_CMAKE_OPTIONS=''
 
@@ -26,6 +27,9 @@ while (($# > 0)); do
 			shift ;;
 		--no-qt)
 			flg_qt=0
+			shift;;
+		--apt-download)
+			flg_apt_download=1
 			shift;;
 		--qt)
 			flg_qt=1
@@ -96,7 +100,18 @@ if ((flg_qt)); then
 	esac
 fi
 
+if test -f '/tmp/apt-cache.tar'; then
+	(cd /var/cache/apt/archives && sudo tar xf '/tmp/apt-cache.tar')
+fi
+
+if ((flg_apt_download)); then
+	$apt install -y --download-only "${apt_pkgs[@]}"
+fi
 $apt install -y "${apt_pkgs[@]}"
+
+if ((flg_apt_download)); then
+	(cd /var/cache/apt/archives && tar cf '/tmp/apt-cache.tar' *.deb)
+fi
 
 case "$obs" in
 	27 | 27.*)

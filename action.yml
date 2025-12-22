@@ -47,6 +47,30 @@ outputs:
 runs:
   using: 'composite'
   steps:
+    - name: 'Prepare'
+      shell: bash
+      id: prep
+      run: |
+        set -e
+        if ${{ runner.os == 'Linux' }}; then
+          ubuntu=$(cat /etc/issue | sed 's/\\.//g' | tr -dc 'A-Za-z0-9.')
+          if test ${{ inputs.qt }} != false; then
+            has_qt='-Qt'
+          else
+            has_qt=''
+          fi
+          echo "apt_cache_key=${ubuntu}${has_qt}" >> $GITHUB_OUTPUT
+        fi
+
+    - name: 'Restore apt cache'
+      if: ${{ runner.os == 'Linux' }}
+      id: apt-cache
+      uses: actions/cache/restore@v4
+      with:
+        path: /tmp/apt-cache.tar
+        key: ${{ runner.os }}-apt-${{ steps.prep.outputs.apt_cache_key }}
+        restore-keys: ${{ runner.os }}-apt-
+
     - name: Download
       id: download
       shell: bash
@@ -65,6 +89,9 @@ runs:
           Linux)
             script=scripts/linux-download.sh
             script_opts=(-a -o "${{ inputs.obs }}" -u "${{ inputs.ubuntu }}" $flg_qt)
+            if ${{ steps.apt-cache.outputs.cache-hit != 'true' }}; then
+              script_opts=("${script_opts[@]}" --apt-download)
+            fi
             ;;
           macOS)
             script=scripts/macos-download.sh
@@ -79,3 +106,10 @@ runs:
             exit 1
         esac
         "${bash[@]}" '${{ github.action_path }}'/"$script" -o "${{ inputs.obs }}" "${script_opts[@]}"
+
+    - name: 'Save apt cache'
+      if: ${{ runner.os == 'Linux' && steps.apt-cache.outputs.cache-hit != 'true' }}
+      uses: actions/cache/save@v4
+      with:
+        path: /tmp/apt-cache.tar
+        key: ${{ runner.os }}-apt-${{ steps.prep.outputs.apt_cache_key }}
