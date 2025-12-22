@@ -100,23 +100,10 @@ if ((flg_qt)); then
 	esac
 fi
 
-if test -f '/tmp/apt-cache.tar'; then
-	(cd /var/cache/apt/archives && sudo tar xf '/tmp/apt-cache.tar')
-fi
-
-if ((flg_apt_download)); then
-	$apt install -y --download-only "${apt_pkgs[@]}"
-fi
-$apt install -y "${apt_pkgs[@]}"
-
-if ((flg_apt_download)); then
-	(cd /var/cache/apt/archives && tar cf '/tmp/apt-cache.tar' *.deb)
-fi
-
 case "$obs" in
 	27 | 27.*)
 		curl -o /tmp/obs-studio-devel.deb http://www.nagater.net/obs-studio/obs-studio-27.2.0-771-g89d7653bb-${ubuntu}.deb
-		sudo apt install /tmp/obs-studio-devel.deb
+		apt_pkgs=("${apt_pkgs[@]}" /tmp/obs-studio-devel.deb)
 		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
 			-DCMAKE_INSTALL_PREFIX=/usr
 			-DCMAKE_INSTALL_LIBDIR=/usr/lib/
@@ -140,7 +127,7 @@ EOF
 				;;
 		esac
 		mv obs-studio-*.deb /tmp/obs-studio-devel.deb
-		sudo apt install /tmp/obs-studio-devel.deb
+		apt_pkgs=("${apt_pkgs[@]}" /tmp/obs-studio-devel.deb)
 		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
 			-DCMAKE_INSTALL_PREFIX=/usr
 			-DLINUX_PORTABLE=OFF
@@ -152,7 +139,7 @@ EOF
 		curl -O http://www.nagater.net/obs-studio/obs-studio_30.0.0-0obsproject1~jammy_amd64.deb
 		sha256sum <<<'14ad30bda71195c35e68076e1d53119ba767f424108ed4e42a3331f83676fa00  obs-studio_30.0.0-0obsproject1~jammy_amd64.deb'
 		mv obs-studio*.deb /tmp/obs-studio.deb
-		sudo apt install /tmp/obs-studio.deb
+		apt_pkgs=("${apt_pkgs[@]}" /tmp/obs-studio.deb)
 		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
 			-DCMAKE_INSTALL_PREFIX=/usr
 			-DLINUX_PORTABLE=OFF
@@ -163,7 +150,7 @@ EOF
 		# copied from https://ppa.launchpadcontent.net/obsproject/obs-studio/ubuntu/pool/main/o/obs-studio/
 		curl -o /tmp/obs-studio.deb http://www.nagater.net/obs-studio/obs-studio_31.0.4-0obsproject1~noble_amd64.deb
 		sha256sum -c - <<<'aa5c63b0a1ca6f3e133702aed7e3e2bb353ed7ec4970f0809b6f4af8b3c096f0  /tmp/obs-studio.deb'
-		sudo apt install -y /tmp/obs-studio.deb
+		apt_pkgs=("${apt_pkgs[@]}" /tmp/obs-studio.deb)
 		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
 			-DCMAKE_INSTALL_PREFIX=/usr
 			-DLINUX_PORTABLE=OFF
@@ -173,7 +160,7 @@ EOF
 	32 | 32.*)
 		curl -o /tmp/obs-studio.deb http://www.nagater.net/obs-studio/obs-studio_32.0.0-0obsproject1~noble_amd64.deb
 		sha256sum -c - <<<'4e53c0c058f7819bbfbab2025290a77be69a2e35b056165da534b4cdbc2bf7e4  /tmp/obs-studio.deb'
-		sudo apt install -y /tmp/obs-studio.deb
+		apt_pkgs=("${apt_pkgs[@]}" /tmp/obs-studio.deb)
 		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
 			-DCMAKE_INSTALL_PREFIX=/usr
 			-DLINUX_PORTABLE=OFF
@@ -181,6 +168,19 @@ EOF
 			"
 		;;
 esac
+
+if test -f '/tmp/apt-cache.tar'; then
+	(cd /var/cache/apt/archives && sudo tar xf '/tmp/apt-cache.tar')
+fi
+
+if ((flg_apt_download)); then
+	$apt install -y --download-only "${apt_pkgs[@]}"
+fi
+$apt install -y "${apt_pkgs[@]}"
+
+if ((flg_apt_download)); then
+	(cd /var/cache/apt/archives && tar cf '/tmp/apt-cache.tar' *.deb)
+fi
 
 echo "OBS_QT_VERSION_MAJOR=$OBS_QT_VERSION_MAJOR" >> $GITHUB_OUTPUT
 echo "PLUGIN_CMAKE_OPTIONS=$(tr '\n' ' ' <<<"$PLUGIN_CMAKE_OPTIONS" | sed -e 's/^ *//' -e 's/ *$//' -e 's/\s\+/ /g')" >> $GITHUB_OUTPUT
