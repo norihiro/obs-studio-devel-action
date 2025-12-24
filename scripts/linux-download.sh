@@ -59,7 +59,7 @@ fi
 
 apt_pkgs=(
 	wget
-	cmake ninja-build pkg-config clang clang-format build-essential curl ccache g++
+	cmake ninja-build pkg-config build-essential curl g++
 	bzip2
 	file
 	libcmocka-dev
