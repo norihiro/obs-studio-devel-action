@@ -32,6 +32,11 @@ case "$b" in
         *.tar.gz)
                 tar xjf "$t"
                 ;;
+	*.dmg)
+		hdiutil attach "$t" > attach.out
+		vol="$(awk -v FS='\t' '/\/Volumes\//{print $3}' attach.out)"
+		ln -s "$vol" volume
+		exit 0;; # xattr failed.
         *)
                 echo "Error: Unsupported format to extract $b" >&2
                 exit 1

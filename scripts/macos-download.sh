@@ -6,6 +6,11 @@ export LANG=C
 d0="$(cd "$(dirname $0)" && pwd)"
 
 flg_qt=1
+if which packagesbuild; then
+	flg_packages=0
+else
+	flg_packages=1
+fi
 
 PLUGIN_CMAKE_OPTIONS=''
 
@@ -197,6 +202,18 @@ esac
 
 if ((flg_qt)); then
 	PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=$OBS_QT_VERSION_MAJOR"
+fi
+
+if ((flg_packages)); then
+	$d0/download-extract.sh \
+		'http://www.nagater.net/obs-studio/Packages.dmg' \
+		6afdd25386295974dad8f078b8f1e41cabebd08e72d970bf92f707c7e48b16c9 \
+		$deps/packages
+
+	vol="$(readlink -f $deps/packages/volume)"
+
+	sudo installer -pkg "${vol}/packages/Packages.pkg" -target /
+	hdiutil detach "${vol}"
 fi
 
 PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
