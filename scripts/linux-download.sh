@@ -115,15 +115,11 @@ case "$obs" in
 		case "$ubuntu" in
 			ubuntu-20.04)
 				curl -O http://www.nagater.net/obs-studio/obs-studio-28.0.0-beta1-11c071ec8-ubuntu-20.04.deb
-				sha256sum <<-EOF
-4f3bfa7afb90a7e26cf2070ab83a5f2c6630fa52fe18b1201aeb3043ff88a226  obs-studio-28.0.0-beta1-11c071ec8-ubuntu-20.04.deb
-EOF
+				sha256sum -c - <<<'4f3bfa7afb90a7e26cf2070ab83a5f2c6630fa52fe18b1201aeb3043ff88a226  obs-studio-28.0.0-beta1-11c071ec8-ubuntu-20.04.deb'
 				;;
 			ubuntu-22.04)
 				curl -O http://www.nagater.net/obs-studio/obs-studio-28.0.0-beta1-11c071ec8-ubuntu-22.04.deb
-				sha256sum <<-EOF
-52ec56fd40e2d036466f244c707d7ab7d2abc539cc4245d7206cccc022ec84f7  obs-studio-28.0.0-beta1-11c071ec8-ubuntu-22.04.deb
-EOF
+				sha256sum -c - <<<'52ec56fd40e2d036466f244c707d7ab7d2abc539cc4245d7206cccc022ec84f7  obs-studio-28.0.0-beta1-11c071ec8-ubuntu-22.04.deb'
 				;;
 		esac
 		mv obs-studio-*.deb /tmp/obs-studio-devel.deb
