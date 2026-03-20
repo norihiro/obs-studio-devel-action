@@ -65,7 +65,7 @@ runs:
     - name: 'Restore apt cache'
       if: ${{ runner.os == 'Linux' }}
       id: apt-cache
-      uses: actions/cache/restore@v4
+      uses: actions/cache/restore@v5
       with:
         path: /tmp/apt-cache.tar
         key: ${{ runner.os }}-apt-${{ steps.prep.outputs.apt_cache_key }}
@@ -108,7 +108,7 @@ runs:
 
     - name: 'Save apt cache'
       if: ${{ runner.os == 'Linux' && steps.apt-cache.outputs.cache-hit != 'true' }}
-      uses: actions/cache/save@v4
+      uses: actions/cache/save@v5
       with:
         path: /tmp/apt-cache.tar
         key: ${{ runner.os }}-apt-${{ steps.prep.outputs.apt_cache_key }}
