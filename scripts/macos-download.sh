@@ -40,6 +40,9 @@ done
 brew bundle --file "$d0/Brewfile"
 
 case "$obs-$arch" in
+	none-*)
+		echo 'Skip downloading obs-studio development package.' >&2
+		;;
 	32-x86_64 | 32-arm64 | 32-universal)
 		$d0/download-extract.sh \
 			"https://github.com/obsproject/obs-deps/releases/download/2025-08-23/macos-deps-2025-08-23-universal.tar.xz" \
