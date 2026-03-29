@@ -76,7 +76,7 @@ esac
 if ((flg_qt)); then
 	case "$ubuntu/$obs" in
 		ubuntu-20.04/* | */27*)
-			apt_pkgs=("${apt_pkgs[@]}" install qtbase5-dev qtbase5-private-dev libqt5svg5-dev qtwayland5)
+			apt_pkgs=("${apt_pkgs[@]}" qtbase5-dev qtbase5-private-dev libqt5svg5-dev qtwayland5)
 			OBS_QT_VERSION_MAJOR=5
 			PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=5"
 			;;
