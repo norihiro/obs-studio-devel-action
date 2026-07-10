@@ -2,7 +2,7 @@ name: 'OBS Studio development environment'
 description: 'Extracts development environment for OBS Studio plugins.'
 inputs:
   arch:
-    description: 'Architecture, x86_64 or arm64 (macOS only).'
+    description: 'Architecture, x86_64 or arm64 (macOS and Windows only).'
     required: false
     default: 'x86_64'
     type: string
@@ -98,7 +98,7 @@ runs:
             ;;
           Windows)
             script=scripts/windows-download.sh
-            script_opts=($flg_qt)
+            script_opts=(-a "${{ inputs.arch }}" $flg_qt)
             ;;
           *)
             echo "Error: unknown OS ${{ runner.os }}"
