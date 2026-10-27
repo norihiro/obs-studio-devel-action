@@ -44,6 +44,8 @@ case "$obs-$arch" in
 		unzip obs-studio-devel.zip
 		OBS_QT_VERSION_MAJOR=5
 		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+		-G \"Visual Studio 17 2022\"
+		-DCMAKE_SYSTEM_VERSION=10.0.18363.657
 		-DQT_VERSION=5
 		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-x64
 		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-x64
@@ -56,6 +58,8 @@ case "$obs-$arch" in
 		unzip obs-studio-devel.zip
 		OBS_QT_VERSION_MAJOR=6
 		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+		-G \"Visual Studio 17 2022\"
+		-DCMAKE_SYSTEM_VERSION=10.0.18363.657
 		-DQT_VERSION=6
 		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-x64
 		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-x64
@@ -67,7 +71,10 @@ case "$obs-$arch" in
 		sha1sum -c <<<'8265cc7bf8d95cef0cf2ae502c1069f1b0655ff0 obs-plugintemplate.tar.gz'
 		tar xzf obs-plugintemplate.tar.gz
 		OBS_QT_VERSION_MAJOR=6
-		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=6
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+		-G \"Visual Studio 17 2022\"
+		-DCMAKE_SYSTEM_VERSION=10.0.18363.657
+		-DQT_VERSION=6
 		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-x64
 		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-x64
 		"
@@ -78,7 +85,10 @@ case "$obs-$arch" in
 		sha256sum -c <<<'235f9513f98d51b92b160e01938765d5545b3c500c0081dbe74febab5456b8a2 obs-plugintemplate.tar.gz'
 		tar xzf obs-plugintemplate.tar.gz
 		OBS_QT_VERSION_MAJOR=6
-		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=6
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+		-G \"Visual Studio 17 2022\"
+		-DCMAKE_SYSTEM_VERSION=10.0.18363.657
+		-DQT_VERSION=6
 		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-x64
 		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-x64
 		"
@@ -89,7 +99,10 @@ case "$obs-$arch" in
 		sha256sum -c <<<'65c7769ff5c466cf0d5af4e134669489f21d882c1880ed7b1df6e828e2dbb679 obs-plugintemplate.tar.gz'
 		tar xzf obs-plugintemplate.tar.gz
 		OBS_QT_VERSION_MAJOR=6
-		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=6
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+		-G \"Visual Studio 17 2022\"
+		-DCMAKE_SYSTEM_VERSION=10.0.18363.657
+		-DQT_VERSION=6
 		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-x64
 		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-x64
 		"
@@ -100,7 +113,10 @@ case "$obs-$arch" in
 		sha256sum -c <<<'86c2cd2a07542a8e830f2a20154375658a56b68f67326d3f2bc916131b24e7a0 obs-plugintemplate.tar.gz'
 		tar xzf obs-plugintemplate.tar.gz
 		OBS_QT_VERSION_MAJOR=6
-		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=6
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+		-G \"Visual Studio 18 2026\"
+		-DCMAKE_SYSTEM_VERSION=10.0.18363.657
+		-DQT_VERSION=6
 		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-arm64
 		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-arm64
 		"
