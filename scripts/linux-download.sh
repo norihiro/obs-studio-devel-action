@@ -41,7 +41,9 @@ while (($# > 0)); do
 done
 
 if test -z "$ubuntu"; then
-	if grep -q 'Ubuntu 24.04' /etc/issue; then
+	if grep -q 'Ubuntu 26.04' /etc/issue; then
+		ubuntu='ubuntu-26.04'
+	elif grep -q 'Ubuntu 24.04' /etc/issue; then
 		ubuntu='ubuntu-24.04'
 	elif grep -q 'Ubuntu 22.04' /etc/issue; then
 		ubuntu='ubuntu-22.04'
@@ -68,7 +70,7 @@ apt_pkgs=(
 $apt update
 
 case "$obs" in
-	32*)
+	32* | 33*)
 		apt_pkgs=("${apt_pkgs[@]}" libsimde-dev)
 		;;
 esac
@@ -88,6 +90,13 @@ if ((flg_qt)); then
 			PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=6"
 			;;
 		ubuntu-24.04/31* | ubuntu-24.04/32*)
+			apt_pkgs=("${apt_pkgs[@]}" qt6-base-dev qt6-base-private-dev libqt6svg6-dev qt6-wayland
+				libxcb1-dev libx11-xcb-dev libwayland-dev
+				libglvnd-dev)
+			OBS_QT_VERSION_MAJOR=6
+			PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=6"
+			;;
+		ubuntu-26.04/33*)
 			apt_pkgs=("${apt_pkgs[@]}" qt6-base-dev qt6-base-private-dev libqt6svg6-dev qt6-wayland
 				libxcb1-dev libx11-xcb-dev libwayland-dev
 				libglvnd-dev)
@@ -161,6 +170,16 @@ case "$obs" in
 			-DCMAKE_INSTALL_PREFIX=/usr
 			-DLINUX_PORTABLE=OFF
 			-DCPACK_DEBIAN_PACKAGE_DEPENDS='obs-studio (>= 32)'
+			"
+		;;
+	33 | 33.*)
+		curl -o /tmp/obs-studio.deb http://www.nagater.net/obs-studio/obs-studio_33.0.0-0obsproject3~resolute_amd64.deb
+		sha256sum -c - <<<'161fcb3f15ba21d504d452bc21f0eaa37b81b4b535b09c7d5feac505bbb41bb9  /tmp/obs-studio.deb'
+		apt_pkgs=("${apt_pkgs[@]}" /tmp/obs-studio.deb)
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+			-DCMAKE_INSTALL_PREFIX=/usr
+			-DLINUX_PORTABLE=OFF
+			-DCPACK_DEBIAN_PACKAGE_DEPENDS='obs-studio (>= 33)'
 			"
 		;;
 esac
