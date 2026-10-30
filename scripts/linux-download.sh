@@ -97,7 +97,7 @@ if ((flg_qt)); then
 			PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS -DQT_VERSION=6"
 			;;
 		ubuntu-26.04/33*)
-			apt_pkgs=("${apt_pkgs[@]}" qt6-base-dev qt6-base-private-dev libqt6svg6-dev qt6-wayland
+			apt_pkgs=("${apt_pkgs[@]}" qt6-base-dev libqt6svg6-dev qt6-wayland
 				libxcb1-dev libx11-xcb-dev libwayland-dev
 				libglvnd-dev)
 			OBS_QT_VERSION_MAJOR=6
