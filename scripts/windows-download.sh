@@ -121,6 +121,36 @@ case "$obs-$arch" in
 		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-arm64
 		"
 		;;
+
+	33-x64 | 33.*-x64)
+		curl -o obs-plugintemplate.tar.gz --location \
+			'https://github.com/norihiro/obs-plugintemplate/releases/download/33.0.0-dev2/obs-plugintemplate-a5fa9eea5-windows-x64.tar.gz'
+		sha256sum -c <<<'c68c12d45d246349a15f242c9af9a9d0c04034dd50935161e07b7c31b2f59ea5 obs-plugintemplate.tar.gz'
+		tar xzf obs-plugintemplate.tar.gz
+		OBS_QT_VERSION_MAJOR=6
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+		-G \"Visual Studio 18 2026\"
+		-DCMAKE_SYSTEM_VERSION=10.0.26100.0
+		-DQT_VERSION=6
+		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-x64
+		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-x64
+		"
+		;;
+	33-arm64 | 33.*-arm64)
+		curl -o obs-plugintemplate.tar.gz --location \
+			'https://github.com/norihiro/obs-plugintemplate/releases/download/33.0.0-dev2/obs-plugintemplate-a5fa9eea5-windows-arm64.tar.gz'
+		sha256sum -c <<<'8f1bd8a13353acb7eb6faca34c49c61a7868ee2e3f6ec9eb379384ee996f46aa obs-plugintemplate.tar.gz'
+		tar xzf obs-plugintemplate.tar.gz
+		OBS_QT_VERSION_MAJOR=6
+		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
+		-G \"Visual Studio 18 2026\"
+		-DCMAKE_SYSTEM_VERSION=10.0.26100.0
+		-DQT_VERSION=6
+		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-arm64
+		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-arm64
+		"
+		;;
+
 	*)
 		echo "Error: Unknown pair of OBS version $obs and architecture $arch" >&2
 		exit 1
