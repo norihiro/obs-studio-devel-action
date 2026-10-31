@@ -72,6 +72,10 @@ case "$obs-$arch" in
 		-DCMAKE_FRAMEWORK_PATH='$obsdir/build_macos;$obsdir/build_macos/libobs;$obsdir/build_macos/frontend/api;$deps/Frameworks;$deps/lib/cmake;$deps'
 		-DCMAKE_MODULE_PATH='$obsdir/cmake/finders'
 		"
+		ln -s ._Release $obsdir/build_macos/libobs/._RelWithDebInfo
+		ln -s ._Release $obsdir/build_macos/frontend/api/._RelWithDebInfo
+		ln -s Release $obsdir/build_macos/libobs/RelWithDebInfo
+		ln -s Release $obsdir/build_macos/frontend/api/RelWithDebInfo
 		;;
 
 	32-x86_64 | 32-arm64 | 32-universal)
