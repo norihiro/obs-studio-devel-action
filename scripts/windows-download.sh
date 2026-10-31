@@ -124,7 +124,7 @@ case "$obs-$arch" in
 
 	33-x64 | 33.*-x64)
 		curl -o obs-plugintemplate.tar.gz --location \
-			'https://github.com/norihiro/obs-plugintemplate/releases/download/33.0.1-dev2/obs-plugintemplate-a5fa9eea5-windows-x64.tar.gz'
+			'https://github.com/norihiro/obs-plugintemplate/releases/download/33.0.0-dev2/obs-plugintemplate-a5fa9eea5-windows-x64.tar.gz'
 		sha256sum -c <<<'c68c12d45d246349a15f242c9af9a9d0c04034dd50935161e07b7c31b2f59ea5 obs-plugintemplate.tar.gz'
 		tar xzf obs-plugintemplate.tar.gz
 		OBS_QT_VERSION_MAJOR=6
@@ -138,7 +138,7 @@ case "$obs-$arch" in
 		;;
 	33-arm64 | 33.*-arm64)
 		curl -o obs-plugintemplate.tar.gz --location \
-			'https://github.com/norihiro/obs-plugintemplate/releases/download/33.0.1-dev2/obs-plugintemplate-a5fa9eea5-windows-arm64.tar.gz'
+			'https://github.com/norihiro/obs-plugintemplate/releases/download/33.0.0-dev2/obs-plugintemplate-a5fa9eea5-windows-arm64.tar.gz'
 		sha256sum -c <<<'8f1bd8a13353acb7eb6faca34c49c61a7868ee2e3f6ec9eb379384ee996f46aa obs-plugintemplate.tar.gz'
 		tar xzf obs-plugintemplate.tar.gz
 		OBS_QT_VERSION_MAJOR=6
