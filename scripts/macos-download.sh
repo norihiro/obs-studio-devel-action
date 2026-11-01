@@ -187,6 +187,7 @@ case "$obs-$arch" in
 			http://www.nagater.net/obs-studio/obs-studio-devel-28.0.0-beta1-202-g11c071ec8-macos-universal.tar.gz \
 			212d5aac7f7ac7a8f06d1892d57f8956514e016cd98579dc4c77eea848269386 \
 			$deps
+		sed -i .agl 's;-framework AGL\>;;' $(grep -l -r framework.AGL "$deps")
 		MACOSX_DEPLOYMENT_TARGET=11.0
 		OBS_QT_VERSION_MAJOR=6
 		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
