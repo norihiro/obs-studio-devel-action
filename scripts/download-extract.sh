@@ -27,10 +27,10 @@ case "$b" in
                 tar xJf "$t"
                 ;;
         *.tar.bz2)
-                tar xzf "$t"
+                tar xjf "$t"
                 ;;
         *.tar.gz)
-                tar xjf "$t"
+                tar xzf "$t"
                 ;;
 	*.dmg)
 		hdiutil attach "$t" > attach.out
