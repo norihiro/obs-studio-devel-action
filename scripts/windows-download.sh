@@ -46,7 +46,7 @@ case "$obs-$arch" in
 		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
 		-G \"Visual Studio 17 2022\"
 		-A x64
-		-DCMAKE_SYSTEM_VERSION=10.0.18363.657
+		-DCMAKE_SYSTEM_VERSION=\"10.0.18363.657\"
 		-DQT_VERSION=5
 		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-x64
 		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-x64
@@ -61,7 +61,7 @@ case "$obs-$arch" in
 		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
 		-G \"Visual Studio 17 2022\"
 		-A x64
-		-DCMAKE_SYSTEM_VERSION=10.0.18363.657
+		-DCMAKE_SYSTEM_VERSION=\"10.0.18363.657\"
 		-DQT_VERSION=6
 		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-x64
 		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-x64
@@ -76,7 +76,7 @@ case "$obs-$arch" in
 		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
 		-G \"Visual Studio 17 2022\"
 		-A x64
-		-DCMAKE_SYSTEM_VERSION=10.0.18363.657
+		-DCMAKE_SYSTEM_VERSION=\"10.0.18363.657\"
 		-DQT_VERSION=6
 		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-x64
 		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-x64
@@ -91,7 +91,7 @@ case "$obs-$arch" in
 		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
 		-G \"Visual Studio 17 2022\"
 		-A x64
-		-DCMAKE_SYSTEM_VERSION=10.0.18363.657
+		-DCMAKE_SYSTEM_VERSION=\"10.0.18363.657\"
 		-DQT_VERSION=6
 		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-x64
 		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-x64
@@ -106,7 +106,7 @@ case "$obs-$arch" in
 		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
 		-G \"Visual Studio 17 2022\"
 		-A x64
-		-DCMAKE_SYSTEM_VERSION=10.0.18363.657
+		-DCMAKE_SYSTEM_VERSION=\"10.0.18363.657\"
 		-DQT_VERSION=6
 		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-x64
 		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-x64
@@ -121,7 +121,7 @@ case "$obs-$arch" in
 		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
 		-G \"Visual Studio 18 2026\"
 		-A ARM64
-		-DCMAKE_SYSTEM_VERSION=10.0.18363.657
+		-DCMAKE_SYSTEM_VERSION=\"10.0.18363.657\"
 		-DQT_VERSION=6
 		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-arm64
 		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-arm64
@@ -137,7 +137,7 @@ case "$obs-$arch" in
 		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
 		-G \"Visual Studio 18 2026\"
 		-A x64
-		-DCMAKE_SYSTEM_VERSION=10.0.26100.0
+		-DCMAKE_SYSTEM_VERSION=\"10.0.26100.0\"
 		-DQT_VERSION=6
 		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-x64
 		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-x64
@@ -152,7 +152,7 @@ case "$obs-$arch" in
 		PLUGIN_CMAKE_OPTIONS="$PLUGIN_CMAKE_OPTIONS
 		-G \"Visual Studio 18 2026\"
 		-A ARM64
-		-DCMAKE_SYSTEM_VERSION=10.0.26100.0
+		-DCMAKE_SYSTEM_VERSION=\"10.0.26100.0\"
 		-DQT_VERSION=6
 		-DCMAKE_INSTALL_PREFIX=$PWD/obs-build-dependencies/plugin-deps-arm64
 		-DCMAKE_PREFIX_PATH=$PWD/obs-build-dependencies/plugin-deps-arm64
